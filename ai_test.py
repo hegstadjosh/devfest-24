@@ -10,7 +10,7 @@ import g4f
 client = OpenAI()
 GPT_MODEL = "gpt-3.5-turbo"
 
-openai.api_key = os.getenv('OPENAI_API_KEY')
+openai.api_key = "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"
 
 @retry(wait=wait_random_exponential(multiplier=1, max=40), stop=stop_after_attempt(3))
 def chat_completion_request(messages, tools=None, tool_choice=None, model=GPT_MODEL):
