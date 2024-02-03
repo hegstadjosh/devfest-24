@@ -31,4 +31,4 @@ chat_response = ai_test.chat_completion_request(
 )
 assistant_message = chat_response.json()["choices"][0]["message"]
 messages.append(assistant_message)
-print(assistant_message)
+ai_test.pretty_print_conversation(messages)
