@@ -28,14 +28,6 @@ messages=[
     {"role": "user", "content": example_diary_2},
   ]
 
-chat_response = ai_test.chat_completion_request(
-    messages=messages
-)
-assistant_message = chat_response.json()["choices"][0]["message"]
-messages.append(assistant_message)
-ai_test.pretty_print_conversation(messages)
-
-
 def runJournal():
     ai_test.pretty_print_conversation(messages)
     user_input = input("Enter a diary entry: ")
