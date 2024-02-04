@@ -6,11 +6,10 @@ import requests
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 from termcolor import colored
 import g4f
+openai.api_key = "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"
 
-client = OpenAI()
+client = OpenAI(api_key=openai.api_key)
 GPT_MODEL = "gpt-3.5-turbo"
-
-openai.api_key = "<INSERT API KEY FOR OPENAI>"
 
 @retry(wait=wait_random_exponential(multiplier=1, max=40), stop=stop_after_attempt(3))
 def chat_completion_request(messages, tools=None, tool_choice=None, model=GPT_MODEL):
