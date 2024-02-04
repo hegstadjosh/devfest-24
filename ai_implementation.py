@@ -37,6 +37,7 @@ ai_test.pretty_print_conversation(messages)
 
 
 def runJournal():
+    ai_test.pretty_print_conversation(messages)
     user_input = input("Enter a diary entry: ")
     messages.append({"role": "user", "content": user_input})
     chat_response = ai_test.chat_completion_request(
@@ -46,19 +47,24 @@ def runJournal():
     messages.append(assistant_message)
     lines = assistant_message['content'].split("\n")
     result_dict = {}
-    for line in lines:
-        # Split the line by colon (":") to separate key and value
-        key, value = line.split(":")
+    try:
+        for line in lines:
+            # Split the line by colon (":") to separate key and value
+            key, value = line.split(":")
+            
+            # Remove leading/trailing whitespace and quotes from key
+            key = key.strip().strip('"')
+            
+            # Convert value to integer
+            value = int(value.strip())
+            
+            # Add key-value pair to the dictionary
+            result_dict[key] = value
+        sorted_dict = dict(sorted(result_dict.items(), key=lambda item: item[1]))
         
-        # Remove leading/trailing whitespace and quotes from key
-        key = key.strip().strip('"')
-        
-        # Convert value to integer
-        value = int(value.strip())
-        
-        # Add key-value pair to the dictionary
-        result_dict[key] = value
-    sorted_dict = dict(sorted(result_dict.items(), key=lambda item: item[1]))
-
-    return sorted_dict
+        return sorted_dict
+    except Exception as e:
+        print(f"Unscorable entry: {e}")
+        return None
+  
   
