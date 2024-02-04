@@ -6,11 +6,11 @@ import requests
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 from termcolor import colored
 import g4f
-openai.api_key = "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"
 
-client = OpenAI(api_key=openai.api_key)
+client = OpenAI()
 GPT_MODEL = "gpt-3.5-turbo"
 
+openai.api_key =  ""
 @retry(wait=wait_random_exponential(multiplier=1, max=40), stop=stop_after_attempt(3))
 def chat_completion_request(messages, tools=None, tool_choice=None, model=GPT_MODEL):
     #
@@ -46,7 +46,6 @@ def chat_completion_request(messages, tools=None, tool_choice=None, model=GPT_MO
         print("Unable to generate ChatCompletion response")
         print(f"Exception: {e}")
         return e
-
     
 def pretty_print_conversation(messages):
   """
@@ -68,12 +67,13 @@ def pretty_print_conversation(messages):
 
   for message in messages:
     if message["role"] == "system":
-      print("Sample journal entries and sentiment scores: \n")
+      print(colored(f"system: {message['content']}\n", role_to_color[message["role"]]))
     elif message["role"] == "user":
-      print(colored(f"{message['content']}\n", role_to_color[message["role"]]))
+      print(colored(f"user: {message['content']}\n", role_to_color[message["role"]]))
     elif message["role"] == "assistant" and message.get("function_call"):
-      print(colored(f"{message['function_call']}\n", role_to_color[message["role"]]))
+      print(colored(f"assistant: {message['function_call']}\n", role_to_color[message["role"]]))
     elif message["role"] == "assistant" and not message.get("function_call"):
-      print(colored(f"{message['content']}\n", role_to_color[message["role"]]))
+      print(colored(f"assistant: {message['content']}\n", role_to_color[message["role"]]))
     elif message["role"] == "tool":
       print(colored(f"function ({message['name']}): {message['content']}\n", role_to_color[message["role"]]))
+
