@@ -69,7 +69,7 @@ def pretty_print_conversation(messages):
 
   for message in messages:
     if message["role"] == "system":
-      print(colored(f"system: {message['content']}\n", role_to_color[message["role"]]))
+      print("Sample journal entries and sentiment scores: \n")
     elif message["role"] == "user":
       print(colored(f"{message['content']}\n", role_to_color[message["role"]]))
     elif message["role"] == "assistant" and message.get("function_call"):
